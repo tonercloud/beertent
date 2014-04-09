@@ -98,8 +98,6 @@ Page {
     DataModel {
         id: dataModel
         objectName: "dataModel"
-        // attempt to pass the role name to a dynamic javascript function
-        // property string role2Filter: "displayLabel"
         function value2FilterOn(index){
             return get(index).displayLabel;
         }
