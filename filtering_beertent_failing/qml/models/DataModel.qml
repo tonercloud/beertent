@@ -14,10 +14,6 @@ ListModel {
 
     Component.onCompleted: fillblistModel();
 
-    function value2FilterOn(index){
-        return get(index).brewery_name;
-    }
-
     function fillblistModel()
     {
         console.log ("DataModel: populating model")
