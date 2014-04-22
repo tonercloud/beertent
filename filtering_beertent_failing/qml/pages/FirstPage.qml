@@ -54,7 +54,7 @@ Page {
 
 
     InitialCharacterPicker {
-        id: initiaPicker
+        id: initialPicker
         anchors.top: parent.top
         width: parent.width
         model: dataModel
@@ -97,11 +97,16 @@ Page {
     //The model has a role displayLabel: This is the role that will be filtered on
     DataModel {
         id: dataModel
-        objectName: "dataModel"
-        // attempt to pass the role name to a dynamic javascript function
-        // property string role2Filter: "displayLabel"
+        objectName: "dataModel"              
+        onPopulated: {
+            //This signal is received when your model has finished populating
+            //If your model takes a long time to populate (population completes after IPC is ready), as is the case with my contacts model
+            //then you might need to uncomment the line below
+            //But at the moment you model is populated fast enough so we can leave commented out.
+            //initialPicker.populate();
+        }
         function value2FilterOn(index){
-            return get(index).displayLabel;
+            return get(index).brewery_name;
         }
     }
 

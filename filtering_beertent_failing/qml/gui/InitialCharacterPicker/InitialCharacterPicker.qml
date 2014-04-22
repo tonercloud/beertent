@@ -38,6 +38,11 @@ Item {
         filteredModel.populate(picker.model, selectedCharacter);
     }
 
+    function populate(){
+        console.log("IPC: populating Models")
+        privateObject.populateModels();
+    }
+
     Component.onCompleted: {
         privateObject.populateModels();
     }

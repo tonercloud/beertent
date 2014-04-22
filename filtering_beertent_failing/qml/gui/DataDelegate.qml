@@ -13,7 +13,7 @@ Rectangle {
     color: "transparent"
     Text {
         id:text
-        text: blistModel
+        text: model.brewery_name
         font.pointSize: 28
         color: "white"
         height: 70
