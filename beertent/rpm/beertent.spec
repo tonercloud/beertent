@@ -12,7 +12,7 @@ Name:       beertent
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
-Summary:    A beer database
+Summary:    User maintained beer database
 Version:    0.1
 Release:    1
 Group:      Qt/Qt
@@ -21,14 +21,14 @@ URL:        http://example.org/
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  beertent.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
-BuildRequires:  pkgconfig(sailfishapp) >= 0.0.10
+BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 
 %description
-A SQL database holding details of the beers I've drunk
+Short description of my SailfishOS Application
 
 
 %prep
@@ -63,14 +63,9 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-/usr/share/icons/hicolor/86x86/apps
-/usr/share/applications
-/usr/share/beertent
-/usr/bin
-%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/%{name}/qml
 %{_bindir}
-/usr/share/beertent
+%{_datadir}/%{name}
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 # >> files
 # << files

@@ -133,28 +133,41 @@ Page {
             }
         }
 
-        BackgroundItem {
+        delegate: BackgroundItem {
             id: delegate
 
-            width: parent.width
-            height: Theme.itemSizeSmall
+            ListItem {
+                id: listItem
+                property bool drunk_y_n: model.drunk_y_n
+                Image {
+                    width: 40
+                    height: listItem.height - 4
 
-            Row {
-                id: row
-                x: Theme.paddingLarge
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.paddingMedium
+                    anchors {
+                        left: parent.left
+                        // this margin refers to the image, not the text in the ListElement
+                        leftMargin: 4
+                        verticalCenter: parent.verticalCenter
+                    }
+                    source: drunk_y_n? "../images/empty_glass.png" : "../images/full_glass.png"
+                }
             }
-            Image {
-                fillMode: Image.PreserveAspectCrop
-                source: model.drunk_y_n? "../images/empty_glass.png" : "../images/full_glass.png"
-            }
+
             Label {
-                anchors.verticalCenter: parent.verticalCenter
-                color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
-                text: model.beerName
+            anchors.leftMargin: 45
+            anchors.verticalCenter: parent.verticalCenter
+            width: parent.width - Theme.paddingLarge
+            // x: Theme.paddingLarge
+            wrapMode: Text.Wrap
+            // elide: Text.ElideRight
+            font.pixelSize: Theme.fontSizeMedium
+            // style: Text.Raised
+            text: model.beerName
+            color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
             }
-        VerticalScrollDecorator {}
+            onClicked: console.log("Clicked " + index)
+            // amend this to call BeerDetailsPage.qml
         }
+        VerticalScrollDecorator {}
     }
 }

@@ -12,13 +12,7 @@ Page {
             title: "Beer Details"
         }
 
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-        PullDownMenu {
-            MenuItem {
-                text: "Edit Beer Page next"
-                onClicked: pageStack.push(Qt.resolvedUrl("EditBeerPage.qml"))
-            }
-        }
+        // No PullDownMenu on this page. Editing is done by a long press.
 
         delegate: BackgroundItem {
             id: delegate

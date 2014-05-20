@@ -8,7 +8,6 @@
 #include <sailfishapp.h>
 #include "DatabaseManager.h"
 
-
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));

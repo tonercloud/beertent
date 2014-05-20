@@ -15,9 +15,9 @@ Page {
      {
          var currIndex = listView.currentIndex;
          var currentItem = listmodel.get(currIndex);
-
+/**
          pageStack.push(Qt.createComponent("BeerListPage.qml"),
-                        { bid : currentItem.bid });
+                        { bid : currentItem.bid }); **/
      }
 
      function getBreweryDetails()
@@ -89,33 +89,54 @@ Page {
              property string brewery_address:    model.brewery_address
              }
          }
+
      SilicaListView {
          id: detailsView
          model: detailslistModel
          anchors.fill: parent
-         header: PageHeader {
-             title: brewerydetailspage.breweryDetails.brewery_name
-             }
 
-         PullDownMenu {
-             MenuItem {
-                 text: "Edit Brewery"
-                 onClicked: pageStack.push(Qt.resolvedUrl("AddEditBreweryPage.qml"))
-            }
-             MenuItem {
-                 text: "List Beers"
-                 // will need to pass the brewery id in the next line !!
-                 onClicked: pageStack.push(Qt.resolvedUrl("BeerListPage.qml"))
-            }
-        }
+         contentHeight: column.height
 
-         delegate: BackgroundItem {
-             id: detailsdelegate
+         Column {
+             id: column
+             width: brewerydetailspage.width - Theme.paddingLarge
+             spacing: Theme.paddingLarge
+             PageHeader {
+                 title: brewerydetailspage.breweryDetails.brewery_name
+                 }
 
              Label {
                  x: Theme.paddingLarge
                  text: brewerydetailspage.breweryDetails.brewery_name
-                 // text: brewerydetailspage.breweryDetails.bid
+                 font.pixelSize: Theme.fontSizeMedium
+             }
+             Label {
+                 x: Theme.paddingLarge
+                 text: brewerydetailspage.breweryDetails.web_Url
+                 font.pixelSize: Theme.fontSizeMedium
+             }
+             Label {
+                 x: Theme.paddingLarge
+                 text: brewerydetailspage.breweryDetails.brewery_phone_no
+                 font.pixelSize: Theme.fontSizeMedium
+             }
+             Label {
+                 width: parent.width - Theme.paddingLarge
+                 x: Theme.paddingLarge
+                 wrapMode: Text.Wrap
+                 elide: Text.ElideRight
+                 text: brewerydetailspage.breweryDetails.brewery_address
+                 font.pixelSize: Theme.fontSizeMedium
+             }
+             Button {
+                 id: beerlist
+
+                 property string selection
+
+                 anchors.horizontalCenter: parent.horizontalCenter
+                 text: "List Beers"
+                 onClicked: pageStack.push(Qt.createComponent("BeerListPage.qml"),
+                                           { bid : brewerydetailspage.breweryDetails.bid })
              }
          }
     }

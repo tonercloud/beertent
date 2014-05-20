@@ -7,3 +7,5 @@ ApplicationWindow
     initialPage: Component { BreweryListPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }
+
+

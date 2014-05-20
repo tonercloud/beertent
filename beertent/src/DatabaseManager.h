@@ -60,7 +60,7 @@ class Beer : public QObject // Beer details
 {
     Q_OBJECT
     Q_PROPERTY(int index READ index WRITE setIndex)
-    Q_PROPERTY(QString beername READ beername WRITE setbeername)
+    Q_PROPERTY(QString beerName READ beerName WRITE setbeerName)
     Q_PROPERTY(QString ABV READ ABV WRITE setABV)
     Q_PROPERTY(int breweryid READ breweryid WRITE setbreweryid)
     Q_PROPERTY(bool drunk_y_n READ drunk_y_n WRITE setdrunk_y_n)
@@ -74,8 +74,8 @@ public:
     int index() const;
     void setIndex(const int);
 
-    QString beername() const;
-    void setbeername(const QString);
+    QString beerName() const;
+    void setbeerName(const QString);
 
     QString ABV() const;
     void setABV(const QString);
@@ -94,7 +94,7 @@ public:
 
 public:
     int m_id;
-    QString m_beername;
+    QString m_beerName;
     QString m_ABV;
     int m_breweryid;
     bool m_drunk_y_n;
@@ -134,14 +134,14 @@ public:
     Q_INVOKABLE void deleteBrewery(const int id);
 
     // for BeerTable
-    Q_INVOKABLE int insertBeer(const QVariant& beername,
+    Q_INVOKABLE int insertBeer(const QVariant& beerName,
                                const QVariant& ABV,
                                const QVariant& breweryid,
                                const QVariant& drunk_y_n,
                                const QVariant& where_drunk,
                                const QVariant& notes);
     Q_INVOKABLE void updateBeer(const int beerId,
-                                const QVariant& beername,
+                                const QVariant& beerName,
                                 const QVariant& ABV,
                                 const QVariant& breweryid,
                                 const QVariant& drunk_y_n,
