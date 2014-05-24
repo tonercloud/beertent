@@ -133,7 +133,7 @@ Page {
             }
         }
 
-        BackgroundItem {
+        delegate: BackgroundItem {
             id: delegate
 
             width: parent.width
