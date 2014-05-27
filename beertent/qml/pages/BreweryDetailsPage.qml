@@ -41,7 +41,7 @@ Page {
 
              console.log("appending detail at 40 : " + i);
              detailslistModel.append({"bid": currentItem.index,
-                                  "breweryname": currentItem.brewery_name,
+                                  "brewery_name": currentItem.brewery_name,
                                   "web_Url": currentItem.web_Url,
                                   "brewery_email_address": breweryDetails.brewery_email_address,
                                   "brewery_phone_no": currentItem.brewery_phone_no,

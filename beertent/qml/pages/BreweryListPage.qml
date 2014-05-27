@@ -135,7 +135,7 @@ Page {
             Label {
                 anchors.verticalCenter: parent.verticalCenter
                 width: parent.width - Theme.paddingLarge
-                x: Theme.paddingLarge
+                x: Theme.paddingMedium
                 wrapMode: Text.Wrap
                 // elide: Text.ElideRight
                 font.pixelSize: Theme.fontSizeMedium

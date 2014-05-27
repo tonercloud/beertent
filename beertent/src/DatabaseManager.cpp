@@ -110,14 +110,14 @@ void Beer::setbeerName(const QString beerName)
     m_beerName = beerName;
 }
 
-QString Beer::ABV() const
+QString Beer::abv() const
 {
-    return m_ABV;
+    return m_abv;
 }
 
-void Beer::setABV(const QString ABV)
+void Beer::setabv(const QString abv)
 {
-    m_ABV = ABV;
+    m_abv = abv;
 }
 
 int Beer::breweryid() const
@@ -239,7 +239,7 @@ bool DatabaseManager::createBeerTable()
         ret = query.exec("create table beers "
                          "(id integer primary key, "
                          "beerName VARCHAR(100), "
-                         "ABV VARCHAR(5), "
+                         "abv VARCHAR(5), "
                          "breweryid INT, "
                          "drunk_y_n bool, "
                          "where_drunk VARCHAR(100), "
@@ -380,7 +380,7 @@ QList<QObject*> DatabaseManager::brewery_beers(const QVariant& breweryid)
         Beer* beer = new Beer(this);
         beer->m_id = query.value(0).toInt();
         beer->m_beerName = query.value(1).toString();
-        beer->m_ABV = query.value(2).toString();
+        beer->m_abv = query.value(2).toString();
         beer->m_breweryid = query.value(3).toInt();
         beer->m_drunk_y_n = query.value(4).toBool(); //Changed from Int to try and identify runtime error.
         beer->m_where_drunk = query.value(5).toString();
@@ -390,7 +390,7 @@ QList<QObject*> DatabaseManager::brewery_beers(const QVariant& breweryid)
 /*
         beer->m_id = query.value(0).toInt();
         beer->m_beerName = query.value(1).toString();
-        beer->m_ABV = query.value(2).toString();
+        beer->m_abv = query.value(2).toString();
         beer->m_drunk_y_n = query.value(3).toBool(); //Changed from Int to try and identify runtime error.
         beer->m_where_drunk = query.value(4).toString();
         beer->m_notes = query.value(5).toString();
@@ -404,7 +404,7 @@ QList<QObject*> DatabaseManager::brewery_beers(const QVariant& breweryid)
 }
 
 int DatabaseManager::insertBeer(const QVariant& beerName,
-                                const QVariant& ABV,
+                                const QVariant& abv,
                                 const QVariant& breweryid,
                                 const QVariant& drunk_y_n,
                                 const QVariant& where_drunk,
@@ -415,11 +415,11 @@ int DatabaseManager::insertBeer(const QVariant& beerName,
 
     if (db.isOpen()) {
         QSqlQuery query;
-        bool ret = query.prepare("INSERT INTO beers (beerName, ABV, breweryid, drunk_y_n, where_drunk, notes) "
-                                 "VALUES (:beerName, :ABV, :breweryid, :drunk_y_n, :where_drunk, :notes)");
+        bool ret = query.prepare("INSERT INTO beers (beerName, abv, breweryid, drunk_y_n, where_drunk, notes) "
+                                 "VALUES (:beerName, :abv, :breweryid, :drunk_y_n, :where_drunk, :notes)");
         if (ret) {
             query.bindValue(":beerName", beerName);
-            query.bindValue(":ABV", ABV);
+            query.bindValue(":abv", abv);
             query.bindValue(":breweryid", breweryid);
             query.bindValue(":drunk_y_n", false);
             query.bindValue(":where_drunk", where_drunk);
@@ -433,17 +433,17 @@ int DatabaseManager::insertBeer(const QVariant& beerName,
 
 void DatabaseManager::updateBeer(const int beerId,
                                  const QVariant& beerName,
-                                 const QVariant& ABV,
+                                 const QVariant& abv,
                                  const QVariant& breweryid,
                                  const QVariant& drunk_y_n,
                                  const QVariant& where_drunk,
                                  const QVariant& notes)
 {
     QSqlQuery query;
-    bool ret = query.prepare("UPDATE beers SET beerName = :beerName, ABV = :ABV, breweryid = :breweryid, drunk_y_n = :drunk_y_n, where_drunk = :where_drunk, notes = :notes where id = :id");
+    bool ret = query.prepare("UPDATE beers SET beerName = :beerName, abv = :abv, breweryid = :breweryid, drunk_y_n = :drunk_y_n, where_drunk = :where_drunk, notes = :notes where id = :id");
     if (ret) {
         query.bindValue(":beerName", beerName);
-        query.bindValue(":ABV", ABV);
+        query.bindValue(":abv", abv);
         query.bindValue(":breweryid", breweryid);
         query.bindValue(":drunk_y_n", drunk_y_n);
         query.bindValue(":where_drunk", where_drunk);
@@ -466,7 +466,7 @@ QObject* DatabaseManager::beer(const int id)
     if (query.next()) {
         beer->m_id = query.value(0).toInt();
         beer->m_beerName = query.value(1).toString();
-        beer->m_ABV = query.value(2).toString();
+        beer->m_abv = query.value(2).toString();
         beer->m_drunk_y_n = query.value(3).toInt(); // was Bool but changed to try and fix 'undefined' error
         beer->m_where_drunk = query.value(4).toString();
         beer->m_notes = query.value(5).toString();

@@ -22,8 +22,8 @@ Page {
 
             beerListModel.append({"bid": currentItem.index,
                               "beerName": currentItem.beerName,
-                              "ABV": currentItem.ABV,
-                              "beerid": beerid,
+                              "abv": currentItem.abv,
+                              "beerid": currentItem.beerid,
                               "drunk_y_n": currentItem.drunk_y_n,
                               "where_drunk": currentItem.where_drunk,
                               "notes": currentItem.notes});
@@ -48,23 +48,24 @@ Page {
         // Used to identify why the brewery name wasn't being populated
         console.log("BeerList showBeerDetails bid", currentItem.bid);
         console.log("BeerList showBeerDetails beerName", currentItem.beerName);
-        console.log("BeerList showBeerDetails breweryName", currentItem.breweryName);
+        console.log("BeerList showBeerDetails breweryName", currentItem.brewery_name);
         console.log("BeerList showBeerDetails abv", currentItem.abv);
-        console.log("BeerList showBeerDetails beerid", currentItem.beerid);
+        console.log("BeerList showBeerDetails breweryId", currentItem.breweryId);
         console.log("BeerList showBeerDetails drunk_y_n", currentItem.drunk_y_n);
         console.log("BeerList showBeerDetails where_drunk", currentItem.where_drunk);
         console.log("BeerList showBeerDetails notes", currentItem.notes);
 
-        pageStack.push(Qt.createComponent("AddBeerPage.qml"),
-                       { beerid      : currentItem.beerid,
-                         // breweryName : currentItem.brewery_name,
+        pageStack.push(Qt.createComponent("BeerDetailsPage.qml"),
+                       { beerId      : currentItem.bid,
+                         brewery_name : currentItem.brewery_name,
                          beerName    : currentItem.beerName,
-                         abv         : currentItem.ABV,
-                         bid   : currentItem.bid,
-                         drunk       : currentItem.drunk,
+                         abv         : currentItem.abv,
+                         // bid         : currentItem.bid,
+                         drunk_y_n   : currentItem.drunk_y_n,
                          where_drunk : currentItem.where_drunk,
                          notes       : currentItem.notes });
     }
+
     // Update page data on PageStatus.Activating state
     onStatusChanged: {
         if (status == PageStatus.Activating) {
@@ -85,7 +86,7 @@ Page {
 
         ListItem {
             id: beerlistItem
-            // property int beerId: model.beerId
+            property int beerId: model.beerId
             property int breweryId: model.breweryId
             property string beerName: model.beerName
             property string abv: model.abv
@@ -132,6 +133,7 @@ Page {
                 onClicked: beerlistView.scrollToTop()
             }
         }
+        VerticalScrollDecorator {}
 
         delegate: BackgroundItem {
             id: delegate
@@ -140,21 +142,29 @@ Page {
             height: Theme.itemSizeSmall
 
             Row {
-                id: row
-                x: Theme.paddingLarge
-                anchors.verticalCenter: parent.verticalCenter
                 spacing: Theme.paddingMedium
-            }
+                id: rowlayout
+                x: Theme.paddingLarge
             Image {
+                id: beerglass
                 fillMode: Image.PreserveAspectCrop
+                x: Theme.paddingMedium
                 source: model.drunk_y_n? "../images/empty_glass.png" : "../images/full_glass.png"
             }
             Label {
-                anchors.verticalCenter: parent.verticalCenter
+                id: abvtext
+                width: beerglass.width * 2
+                color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
+                text: model.abv
+            }
+            Label {
                 color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
                 text: model.beerName
+                }
             }
-        VerticalScrollDecorator {}
+            onClicked: {
+                showBeerDetails(model);
+            }
         }
     }
 }

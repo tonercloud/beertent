@@ -85,7 +85,7 @@ Page {
         TextField {
             id: abvField
             anchors { left: parent.left; right: parent.right }
-            focus: true; label: "ABV"; placeholderText: label
+            focus: true; label: "abv"; placeholderText: label
             EnterKey.enabled: text || inputMethodComposing
             EnterKey.iconSource: "image://theme/icon-m-enter-next"
             EnterKey.onClicked: wheredrunkField.focus = true
