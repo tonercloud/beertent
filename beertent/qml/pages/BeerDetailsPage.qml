@@ -47,6 +47,7 @@ Page {
 
             detailslistModel.append({"beername:": currentItem.beerName,
                                         "ABV:": currentItem.abv,
+                                        "brewery id:": currentItem.breweryid,
                                         "drunk_y_n:": currentItem.drunk_y_n,
                                         "where_drunk:": currentItem.where_drunk,
                                         "notes:": currentItem.notes});
@@ -90,7 +91,7 @@ Page {
             }
             Label {
                 x: Theme.paddingLarge
-                text: drunk_y_n
+                text: (drunk_y_n ?  "Drunk at: " : "Not drunk yet")
             }
             Label {
                 x: Theme.paddingLarge

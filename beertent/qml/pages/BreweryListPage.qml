@@ -9,6 +9,8 @@ Page {
 
     property var deleteDialog
 
+    signal populated
+
     function fillblistModel()
     {
         blistView.model = emptyblistModel;
@@ -28,6 +30,10 @@ Page {
                                  "brewery_address": item.brewery_address});
             item = null;
         }
+        console.log ("DataModel: model populated with items: " + brewerydata.length);
+
+        //emit signal that the model is now populated
+        populated()
 
         if (blistModel.count < 1) {
             addResourcesBtn.opacity = 1;
