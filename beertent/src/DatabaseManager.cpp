@@ -374,7 +374,7 @@ QList<QObject*> DatabaseManager::brewery_beers(const QVariant& breweryid)
 
     // qDebug() << "DBM 376 Reading beers for breweryid" << brewer ;
     QList<QObject*> rtn;
-    QSqlQuery query(QString("select * from beers where breweryid = %1 ORDER BY beerName ASC").arg(brewery));
+    QSqlQuery query(QString("select * from beers where breweryid = %1 ORDER BY abv ASC").arg(brewery));
     // QSqlQuery query(QString("select * from beers where breweryid = %1 ORDER BY beerName ASC"));
     while (query.next()) {
         Beer* beer = new Beer(this);

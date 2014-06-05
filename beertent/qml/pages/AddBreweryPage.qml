@@ -22,11 +22,7 @@ Page {
         else {
             db.insertBrewery(breweryNameField.text, web_UrlField.text, breweryemailaddressField.text, breweryphonenoField.text, breweryaddressField.text );
         }
-        doBack();
     }
-
-    // Look at WizardPage.qml in the gallery code for how to impliment an Account Creation
-    // wizard including placeholder text.
 
     SilicaFlickable {
         anchors.fill: parent
@@ -87,6 +83,7 @@ Page {
                 if (errorHighlight)
                     breweryNameField.focus = true
                 else
+                    addBreweryToDatabase();
                     pageStack.push(Qt.resolvedUrl("BreweryListPage.qml"))
                 }
             }

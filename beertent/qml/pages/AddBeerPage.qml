@@ -5,7 +5,7 @@ import Sailfish.Silica 1.0
 Page {
     id: addbeerpage
 
-    property int    beerid: -1
+    property int    beerId: -1
     property string beerName
     property string abv
     property int    breweryid: -1
@@ -20,45 +20,29 @@ Page {
     {
         drunk = (wheredrunkField.text.length > 0);
         if (beerId !== -1) {
-            db.updateBeer(beerId, beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, notesField.text );
+            db.updateBeer(beerId, beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, tastingNotesField.text );
             // db.updateBeer(beerId, beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, notesField.text );
-            console.debug("BeerAddEdit 25", beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, notesField.text);
+            console.debug("BeerAddEdit 25", beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, tastingNotesField.text);
         }
         else {
-            db.insertBeer(beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, notesField.text);
-            console.debug("BeerAddEdit 31", beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, notesField.text);
+            db.insertBeer(beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, tastingNotesField.text);
+            console.debug("BeerAddEdit 29", beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, tastingNotesField.text);
         }
+        /**
+        if (beerAddPage.beerId === -1) {
+            state = "new";
+            console.log("34 BeAEPage StatusChanged", PageStatus.Activating);
+        }
+        else {
+            state = "view";
+            console.log("38 BeAEPage StatusChanged", PageStatus.Activating);
+        } **/
     }
      // Deletes the beer data from the database.
     function deleteBeerFromDatabase()
     {
         db.deleteBeer(beerId);
     }
-
-    onBeeridChanged: {
-        if (beerAddPage.beerId === -1) {
-            state = "new";
-            console.log("41 BeAEPage StatusChanged", PageStatus.Activating);
-        }
-        else {
-            state = "view";
-            console.log("65 BeAEPage StatusChanged", PageStatus.Activating);
-        }
-    }
-
-    function addBreweryToDatabase()
-    {
-        if (breweryid !== -1) {
-            db.updateBrewery(breweryid, breweryNameField.text, web_UrlField.text, breweryemailaddressField.text, breweryphonenoField.text, breweryaddressField.text );
-        }
-        else {
-            db.insertBrewery(breweryNameField.text, web_UrlField.text, breweryemailaddressField.text, breweryphonenoField.text, breweryaddressField.text );
-        }
-        doBack();
-    }
-
-    // Look at WizardPage.qml in the gallery code for how to impliment an Account Creation
-    // wizard including placeholder text.
 
     SilicaFlickable {
         anchors.fill: parent
@@ -97,11 +81,13 @@ Page {
             focus: true; label: "Where beer drunk"; placeholderText: label
             EnterKey.enabled: text || inputMethodComposing
             EnterKey.iconSource: "image://theme/icon-m-enter-next"
-            EnterKey.onClicked: tastingNotes.focus = true
+            EnterKey.onClicked: tastingNotesField.focus = true
         }
 
-        TextField {
+        TextArea {
             id: tastingNotesField
+            width: parent.width
+            height: Math.max(addbeerpage.width/3, implicitHeight)
             anchors { left: parent.left; right: parent.right }
             focus: true; label: "Tasting Notes"; placeholderText: label
             EnterKey.enabled: text || inputMethodComposing
@@ -110,7 +96,8 @@ Page {
                 if (errorHighlight)
                     breweryNameField.focus = true
                 else
-                    pageStack.push(Qt.resolvedUrl("BeerListPage.qml"))
+                    addBeerToDatabase();
+                    pageStack.push(Qt.resolvedUrl("BreweryListPage.qml"))
                 }
             }
         }
@@ -119,11 +106,11 @@ Page {
     Component.onCompleted: {
         if (addbeerpage.beerid == -1) {
             state = "new";
-            console.log("122 addbeerpage StatusChanged", PageStatus.Activating);
+            console.log("107 addbeerpage StatusChanged", PageStatus.Activating);
         }
         else {
             state = "view";
-            console.log("126 addbeerpage StatusChanged", PageStatus.Activating);
+            console.log("111 addbeerpage StatusChanged", PageStatus.Activating);
         }
     }
 }

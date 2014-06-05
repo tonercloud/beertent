@@ -6,7 +6,7 @@ Page {
     id: beerlistpage
 
     property int bid: -1
-    property int beerid: -1
+    property int beerId: -1
 
     state: "new"
 
@@ -23,20 +23,19 @@ Page {
             beerListModel.append({"bid": currentItem.index,
                               "beerName": currentItem.beerName,
                               "abv": currentItem.abv,
-                              "beerid": currentItem.beerid,
+                              "beerId": currentItem.beerId,
                               "drunk_y_n": currentItem.drunk_y_n,
                               "where_drunk": currentItem.where_drunk,
                               "notes": currentItem.notes});
 
             currentItem = null;
         }
-/**
         if (beerListModel.count < 1)
             addResourcesBtn.opacity = 1;
 
         else
             addResourcesBtn.opacity = 0;
-**/
+
         beerlistView.model = beerListModel;
     }
 
@@ -45,17 +44,9 @@ Page {
         var currIndex = beerlistView.currentIndex;
         var currentItem = beerListModel.get(index);
 
-        // Used to identify why the brewery name wasn't being populated
-        console.log("BeerList showBeerDetails bid", currentItem.bid);
-        console.log("BeerList showBeerDetails beerName", currentItem.beerName);
-        console.log("BeerList showBeerDetails breweryName", currentItem.brewery_name);
-        console.log("BeerList showBeerDetails abv", currentItem.abv);
-        console.log("BeerList showBeerDetails breweryId", currentItem.breweryId);
-        console.log("BeerList showBeerDetails drunk_y_n", currentItem.drunk_y_n);
-        console.log("BeerList showBeerDetails where_drunk", currentItem.where_drunk);
-        console.log("BeerList showBeerDetails notes", currentItem.notes);
-
         pageStack.push(Qt.createComponent("BeerDetailsPage.qml"),
+                       { beerId     : currentItem.beerId });
+        /**
                        { beerId      : currentItem.bid,
                          brewery_name : currentItem.brewery_name,
                          beerName    : currentItem.beerName,
@@ -64,6 +55,7 @@ Page {
                          drunk_y_n   : currentItem.drunk_y_n,
                          where_drunk : currentItem.where_drunk,
                          notes       : currentItem.notes });
+                         **/
     }
 
     // Update page data on PageStatus.Activating state
@@ -80,7 +72,7 @@ Page {
     ListModel {
         id: emptybeerListModel
     }
-
+/**
     Component {
         id: beerlistDelegate
 
@@ -95,7 +87,7 @@ Page {
             property string notes: model.notes
         }
     }
-
+**/
     Item {
         id: addResourcesBtn
         anchors.centerIn: parent
@@ -124,7 +116,7 @@ Page {
             MenuItem {
                 text: "Add a Beer"
                 // change page name to reflect the choice change above
-                onClicked: pageStack.push(Qt.resolvedUrl("AddBeerPage.qml"))
+                onClicked: pageStack.push(Qt.resolvedUrl("AddBeerPage.qml"), { breweryId : index })
             }
         }
         PushUpMenu {

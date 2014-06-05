@@ -75,7 +75,7 @@ Page {
     ListModel {
         id: emptyblistModel
     }
-
+/**
     Component {
         id: blistDelegate
 
@@ -90,7 +90,7 @@ Page {
             property string brewery_address: model.brewery_address
         }
     }
-
+**/
     Item {
         id: addResourcesBtn
         anchors.centerIn: parent
