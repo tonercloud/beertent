@@ -40,10 +40,10 @@ Page {
         beerlistView.model = beerListModel;
     }
 
-    function showBeerDetails(bid)
+    function showBeerDetails(index)
     {
         var currIndex = beerlistView.currentIndex;
-        var currentItem = beerListModel.get(currIndex);
+        var currentItem = beerListModel.get(index);
 
         // Used to identify why the brewery name wasn't being populated
         console.log("BeerList showBeerDetails bid", currentItem.bid);
@@ -163,7 +163,7 @@ Page {
                 }
             }
             onClicked: {
-                showBeerDetails(model);
+                showBeerDetails(index);
             }
         }
     }

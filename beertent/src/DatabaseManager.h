@@ -140,7 +140,7 @@ public:
                                const QVariant& drunk_y_n,
                                const QVariant& where_drunk,
                                const QVariant& notes);
-    Q_INVOKABLE void updateBeer(const int beerId,
+    Q_INVOKABLE void updateBeer(const int id,
                                 const QVariant& beerName,
                                 const QVariant& abv,
                                 const QVariant& breweryid,

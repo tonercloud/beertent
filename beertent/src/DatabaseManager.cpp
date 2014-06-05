@@ -386,20 +386,8 @@ QList<QObject*> DatabaseManager::brewery_beers(const QVariant& breweryid)
         beer->m_where_drunk = query.value(5).toString();
         beer->m_notes = query.value(6).toString();
 
-
-/*
-        beer->m_id = query.value(0).toInt();
-        beer->m_beerName = query.value(1).toString();
-        beer->m_abv = query.value(2).toString();
-        beer->m_drunk_y_n = query.value(3).toBool(); //Changed from Int to try and identify runtime error.
-        beer->m_where_drunk = query.value(4).toString();
-        beer->m_notes = query.value(5).toString();
-*/
-
         rtn.append(beer);
     }
-    // qDebug() << "DBM 389 brewery " << brewery ;
-    // qDebug() << "DBM 390 beer count for brewery is " << rtn.length();
     return rtn;
 }
 
@@ -410,8 +398,7 @@ int DatabaseManager::insertBeer(const QVariant& beerName,
                                 const QVariant& where_drunk,
                                 const QVariant& notes)
 {
-    // bool ret = false;
-    int beerId = -1;
+    int id = -1;
 
     if (db.isOpen()) {
         QSqlQuery query;
@@ -427,11 +414,10 @@ int DatabaseManager::insertBeer(const QVariant& beerName,
             query.exec();
         }
     }
-        // return QVariant(beerId);
-        return beerId;
+        return id;
 }
 
-void DatabaseManager::updateBeer(const int beerId,
+void DatabaseManager::updateBeer(const int id,
                                  const QVariant& beerName,
                                  const QVariant& abv,
                                  const QVariant& breweryid,
@@ -448,7 +434,7 @@ void DatabaseManager::updateBeer(const int beerId,
         query.bindValue(":drunk_y_n", drunk_y_n);
         query.bindValue(":where_drunk", where_drunk);
         query.bindValue(":notes", notes);
-        query.bindValue(":id", beerId);
+        query.bindValue(":id", id);
         ret = query.exec();
     }
 }
