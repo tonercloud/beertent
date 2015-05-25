@@ -7,7 +7,7 @@ CoverBackground {
 
     Image {
         id: logo
-        source: "images/beertent.png"
+        source: "qrc:///assets/icons/beertent.png"
         anchors.centerIn: parent
     }
 
@@ -22,7 +22,7 @@ CoverBackground {
         style: Text.Raised
         styleColor: Theme.secondaryColor
         horizontalAlignment: Text.AlignHCenter
-        text: "Beertent"
+        text: qsTr("Beertent")
     }
 
     CoverActionList {

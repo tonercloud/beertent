@@ -1,11 +1,13 @@
-Name: beertent
+Name: harbour-beertent
 Summary: User maintained beer database
-Version: 0.1
+Version: 0.4
 Release: 1
+QMakeOptions:
+- VERSION='%{version}-%{release}'
 # The contents of the Group field must be one of the groups listed here:
 # http://gitorious.org/meego-developer-tools/spectacle/blobs/master/data/GROUPS
 Group: Qt/Qt
-URL: http://example.org/
+URL: https://github.com/tonercloud/beertent
 License: LICENSE
 # This must be generated before uploading a package to a remote build service.
 # Usually this line does not need to be modified.

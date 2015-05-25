@@ -8,35 +8,35 @@ Page {
     property int    beerId: -1
     property string beerName
     property string abv
-    property int    breweryid: -1
-    property bool   drunk
+    property int    bid: -1
+    // property string drunk_y_n
+    property var drunk_y_n_text: "false"
     property string where_drunk
     property string notes
 
     state: "new"
 
-    /** Adds the beer data into the database. */
     function addBeerToDatabase()
     {
-        drunk = (wheredrunkField.text.length > 0);
+        if (wheredrunkField.text.length > 0) {
+            drunk_y_n_text = "true" }
+        else drunk_y_n_text = "false"
         if (beerId !== -1) {
-            db.updateBeer(beerId, beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, tastingNotesField.text );
-            // db.updateBeer(beerId, beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, notesField.text );
-            console.debug("BeerAddEdit 25", beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, tastingNotesField.text);
+            db.updateBeer(beerId, beerNameField.text, abvField.text, brewerydetailspage.breweryDetails.bid, drunk_y_n_text, wheredrunkField.text, tastingNotesField.text );
+            console.debug("BeerAddEdit 23", beerNameField.text, abvField.text, brewerydetailspage.breweryDetails.bid, drunk_y_n_text, wheredrunkField.text, tastingNotesField.text);
         }
         else {
-            db.insertBeer(beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, tastingNotesField.text);
-            console.debug("BeerAddEdit 29", beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, tastingNotesField.text);
+            db.insertBeer(beerNameField.text, abvField.text, bid, drunk_y_n_text, wheredrunkField.text, tastingNotesField.text);
+            console.debug("BeerAddEdit 27", beerNameField.text, abvField.text, bid, drunk_y_n_text, wheredrunkField.text, tastingNotesField.text);
         }
-        /**
-        if (beerAddPage.beerId === -1) {
+        if (addbeerpage.beerId === -1) {
             state = "new";
-            console.log("34 BeAEPage StatusChanged", PageStatus.Activating);
+            console.log("31 AddBeerPage StatusChanged", PageStatus.Activating);
         }
         else {
             state = "view";
-            console.log("38 BeAEPage StatusChanged", PageStatus.Activating);
-        } **/
+            console.log("35 AddBeerPage StatusChanged", PageStatus.Activating);
+        }
     }
      // Deletes the beer data from the database.
     function deleteBeerFromDatabase()
@@ -97,20 +97,20 @@ Page {
                     breweryNameField.focus = true
                 else
                     addBeerToDatabase();
+                pageStack.clear();
                     pageStack.push(Qt.resolvedUrl("BreweryListPage.qml"))
                 }
             }
         }
     }
-
     Component.onCompleted: {
         if (addbeerpage.beerid == -1) {
             state = "new";
-            console.log("107 addbeerpage StatusChanged", PageStatus.Activating);
+            console.log("105 addbeerpage StatusChanged", PageStatus.Activating);
         }
         else {
             state = "view";
-            console.log("111 addbeerpage StatusChanged", PageStatus.Activating);
+            console.log("109 addbeerpage StatusChanged", PageStatus.Activating);
         }
     }
 }

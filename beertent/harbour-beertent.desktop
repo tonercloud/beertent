@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Exec=harbour-beertent
+Icon=harbour-beertent
+Name=Beertent
+# translation example:
+# your app name in German locale (de)
+Name[de]=harbour-beertent

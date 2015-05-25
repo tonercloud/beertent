@@ -116,7 +116,6 @@ public:
 public:
     Q_INVOKABLE void open();
     Q_INVOKABLE void close();
-    Q_INVOKABLE void deletedb();
 
     // for BrewersTable
     Q_INVOKABLE QVariant insertBrewery(const QVariant& brewery_name,
@@ -131,7 +130,6 @@ public:
                                       const QVariant& brewery_email_address,
                                       const QVariant& brewery_phone_no,
                                       const QVariant& brewery_address);
-    Q_INVOKABLE void deleteBrewery(const int id);
 
     // for BeerTable
     Q_INVOKABLE int insertBeer(const QVariant& beerName,
@@ -147,7 +145,6 @@ public:
                                 const QVariant& drunk_y_n,
                                 const QVariant& where_drunk,
                                 const QVariant& notes);
-    Q_INVOKABLE void deleteBeer(const int id);
     Q_INVOKABLE QList<QObject*> brewery_beers(const QVariant& breweryid);
     Q_INVOKABLE QObject* beer(const int id);
 

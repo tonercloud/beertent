@@ -19,13 +19,13 @@ Page {
          pageStack.push(Qt.createComponent("BeerListPage.qml"),
                         { bid : currentItem.bid }); **/
      }
-
+/**
      function getBreweryDetails()
      {
          // insert code here to fetch single brewery details from bid
          // and call it from somewhere !!
      }
-
+**/
      function fillBreweryDetailsListModel()
      {
 
@@ -39,7 +39,7 @@ Page {
          for(var i = 0; i < brewerydetailspage.breweryDetails.bid; i++) {
              var currentItem = breweryDetails[i];
 
-             console.log("appending detail at 40 : " + i);
+             // console.log("appending detail at 42 : " + i);
              detailslistModel.append({"bid": currentItem.index,
                                   "brewery_name": currentItem.brewery_name,
                                   "web_Url": currentItem.web_Url,
@@ -106,12 +106,17 @@ Page {
                  }
 
              Label {
+                 width: parent.width - Theme.paddingLarge
                  x: Theme.paddingLarge
-                 text: brewerydetailspage.breweryDetails.brewery_name
+                 wrapMode: Text.Wrap
+                 text: breweryDetails.brewery_name
+                 // text: brewerydetailspage.breweryDetails.brewery_name
                  font.pixelSize: Theme.fontSizeMedium
              }
              Label {
+                 width: parent.width - Theme.paddingLarge
                  x: Theme.paddingLarge
+                 wrapMode: Text.Wrap
                  text: brewerydetailspage.breweryDetails.web_Url
                  font.pixelSize: Theme.fontSizeMedium
              }

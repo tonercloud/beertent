@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+// Adaptive Filtering
+import "../AdaptiveSearch"
 
 Page {
     id: brewerylistpage
@@ -16,7 +18,7 @@ Page {
         blistView.model = emptyblistModel;
         blistModel.clear();
 
-        var brewerydata = db.brewers(useCache);
+        var brewerydata = db.brewers(false);
         // console.debug("BreweryListPage 17 ", brewerydata);
 
         for (var i = 0; i < brewerydata.length; i++) {
@@ -125,13 +127,25 @@ Page {
             }
             MenuItem {
                 text: "Add Brewery"
-                onClicked: pageStack.push(Qt.resolvedUrl("AddBreweryPage.qml"))
+                onClicked:
+                    // Qt.createComponent("AddBreweryPage.qml").createObject(brewerylistpage, {});
+                pageStack.push(Qt.resolvedUrl("AddBreweryPage.qml"))
             }
         }
         PushUpMenu {
             MenuItem {
                 text: "Go to top"
                 onClicked: blistView.scrollToTop()
+            }
+        }
+
+        AdaptiveSearch {
+            id: adaptive
+            anchors.fill: parent
+            model: blistModel
+
+            onFilterUpdated: {
+                blistView.model = adaptive.filtermodel
             }
         }
 

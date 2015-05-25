@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 
 
 Page {
-    id: addbrewerypage
+    id: editbrewerypage
 
     property int    breweryid: -1
     property string breweryName
@@ -11,8 +11,6 @@ Page {
     property string breweryemailaddress
     property string breweryphoneno
     property string breweryaddress
-
-    state: "new"
 
     function addBreweryToDatabase()
     {
@@ -35,7 +33,7 @@ Page {
         anchors { left: parent.left; right: parent.right }
         spacing: Theme.paddingLarge
 
-        PageHeader { title: "Add a Brewery" }
+        PageHeader { title: "Edit Brewery" }
 
         TextField {
             id: breweryNameField

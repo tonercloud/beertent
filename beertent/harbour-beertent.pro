@@ -10,18 +10,22 @@
 #   - translation filenames have to be changed
 
 # The name of your application
-TARGET = beertent
+TARGET = harbour-beertent
 
 CONFIG += sailfishapp
 
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
 QT += sql
+
+RESOURCES += resources.qrc
 
 SOURCES += src/beertent.cpp \
            src/DatabaseManager.cpp
 
 HEADERS += src/DatabaseManager.h
 
-OTHER_FILES += qml/beertent.qml \
+OTHER_FILES += qml/harbour-beertent.qml \
     qml/cover/CoverPage.qml \
     qml/pages/About.qml \
     qml/pages/AddBreweryPage.qml \
@@ -30,14 +34,18 @@ OTHER_FILES += qml/beertent.qml \
     qml/pages/BreweryListPage.qml \
     qml/pages/BeerListPage.qml \
     qml/pages/BeerDetailsPage.qml \
-    rpm/beertent.changes.in \
-    rpm/beertent.spec \
-    rpm/beertent.yaml \
+    qml/pages/EditBreweryPage.qml \
+    qml/AdaptiveSearch/AdaptiveSearch.qml \
+    qml/AdaptiveSearch/AdaptiveSearchPanel.qml \
+    qml/AdaptiveSearch/PanelButton.qml \
+    rpm/harbour-beertent.changes.in \
+    rpm/harbour-beertent.spec \
+    rpm/harbour-beertent.yaml \
     translations/*.ts \
-    beertent.desktop
+    harbour-beertent.desktop
 
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
-TRANSLATIONS += translations/beertent-de.ts
+TRANSLATIONS += translations/harbour-beertent-de.ts
 

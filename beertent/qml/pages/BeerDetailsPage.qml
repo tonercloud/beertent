@@ -9,7 +9,8 @@ Page {
     property string beerName
     property string abv
     property int    breweryid: -1
-    property bool   drunk_y_n
+    //property string drunk_y_n
+    property bool drunk_y_n: false
     property string where_drunk
     property string notes
 
@@ -20,7 +21,7 @@ Page {
         drunk_y_n = (where_drunkField.text.length > 0);
         if (beerId !== -1) {
             db.updateBeer(beerId, beerNameField.text, abvField.text, breweryid, drunk_y_n, wheredrunkField.text, notesField.text );
-            console.debug("BeerAddEdit 25", beerNameField.text, abvField.text, breweryid, drunk, wheredrunkField.text, notesField.text);
+            console.debug("BeerAddEdit 23", beerNameField.text, abvField.text, breweryid, drunk_y_n, wheredrunkField.text, notesField.text);
         }
         else {
             console.debug("BeerDetailsPage 26, beerId is wrong!")
@@ -70,6 +71,7 @@ Page {
         anchors.fill: parent
 
         // No PullDownMenu on this page. Editing is done by a long press.
+        // Editing is yet to be implimented - 20/10/2014
 
         contentHeight: column.height
 
@@ -91,11 +93,14 @@ Page {
             }
             Label {
                 x: Theme.paddingLarge
-                text: (drunk_y_n ?  "Drunk at: " : "Not drunk yet")
+                text: (drunk_y_n ? "Drunk at: " : "Not drunk yet")
             }
             Label {
+                width: parent.width - Theme.paddingLarge
                 x: Theme.paddingLarge
+                wrapMode: Text.Wrap
                 text: where_drunk
+                font.pixelSize: Theme.fontSizeMedium
             }
             Label {
                 width: parent.width - Theme.paddingLarge

@@ -8,7 +8,7 @@ Page {
     property int bid: -1
     property int beerId: -1
 
-    state: "new"
+    // state: "new"
 
     function fillbeerListModel()
     {
@@ -30,6 +30,9 @@ Page {
 
             currentItem = null;
         }
+        console.log("Line 33 - DataModel: breweryid (bid): " + bid);
+        console.log("Line 34 - DataModel: model populated with items: " + beersdata.length);
+
         if (beerListModel.count < 1)
             addResourcesBtn.opacity = 1;
 
@@ -45,9 +48,7 @@ Page {
         var currentItem = beerListModel.get(index);
 
         pageStack.push(Qt.createComponent("BeerDetailsPage.qml"),
-                       { beerId     : currentItem.beerId });
-        /**
-                       { beerId      : currentItem.bid,
+                       { beerId      : currentItem.beerId,
                          brewery_name : currentItem.brewery_name,
                          beerName    : currentItem.beerName,
                          abv         : currentItem.abv,
@@ -55,7 +56,6 @@ Page {
                          drunk_y_n   : currentItem.drunk_y_n,
                          where_drunk : currentItem.where_drunk,
                          notes       : currentItem.notes });
-                         **/
     }
 
     // Update page data on PageStatus.Activating state
@@ -115,8 +115,8 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: "Add a Beer"
-                // change page name to reflect the choice change above
-                onClicked: pageStack.push(Qt.resolvedUrl("AddBeerPage.qml"), { breweryId : index })
+                // onClicked: pageStack.push(Qt.resolvedUrl("AddBeerPage.qml"), { breweryId : index })
+                onClicked: pageStack.push(Qt.resolvedUrl("AddBeerPage.qml"), {  bid : brewerydetailspage.breweryDetails.bid })
             }
         }
         PushUpMenu {
@@ -141,9 +141,10 @@ Page {
                 id: beerglass
                 fillMode: Image.PreserveAspectCrop
                 x: Theme.paddingMedium
-                source: model.drunk_y_n? "../images/empty_glass.png" : "../images/full_glass.png"
+                // source: drunk? "../images/empty_glass.png" : "../images/full_glass.png"
+                source: model.drunk_y_n ? "../images/empty_glass.png" : "../images/full_glass.png"
             }
-            Label {
+             Label {
                 id: abvtext
                 width: beerglass.width * 2
                 color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
@@ -152,6 +153,15 @@ Page {
             Label {
                 color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
                 text: model.beerName
+                }
+            }
+            Component {
+                id: contextMenuComponent
+                ContextMenu {
+                    MenuItem {
+                        text: "Edit"
+                        // onClicked: edit()
+                    }
                 }
             }
             onClicked: {

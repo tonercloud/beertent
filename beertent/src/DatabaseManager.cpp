@@ -190,10 +190,15 @@ bool DatabaseManager::opendb()
     // Find QSLite driver
     db = QSqlDatabase::addDatabase("QSQLITE");
 
-    QString path(QDir::home().path());
-    path.append(QDir::separator()).append("beertent.db.sqlite");
-    path = QDir::toNativeSeparators(path);
-    db.setDatabaseName(path);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/beertent.db.sqlite";
+
+    QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+    if (!dir.exists()) {
+        dir.mkpath(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+    }
+        db.setDatabaseName(path);
+
+        // qDebug() << "DB Path: " << path;
 
     // Open databasee
     return db.open();
@@ -214,17 +219,6 @@ bool DatabaseManager::initdb()
     return ret;
 }
 
-void DatabaseManager::deletedb()
-{
-    db.close();
-
-    QString path(QDir::home().path());
-    path.append(QDir::separator()).append("beertent.db.sqlite");
-    path = QDir::toNativeSeparators(path);
-
-    QFile::remove(path);
-}
-
 QSqlError DatabaseManager::lastError()
 {
     return db.lastError();
@@ -243,7 +237,7 @@ bool DatabaseManager::createBeerTable()
                          "breweryid INT, "
                          "drunk_y_n bool, "
                          "where_drunk VARCHAR(100), "
-                         "notes VARCHAR(250), "
+                         "notes VARCHAR(400), "
                          "FOREIGN KEY (breweryid) REFERENCES brewers)");
     }
     return ret;
@@ -287,12 +281,6 @@ QVariant DatabaseManager::updateBrewery(const QVariant& id,
         ret = query.exec();
     }
     return QVariant(ret);
-}
-
-void DatabaseManager::deleteBrewery(const int id)
-{
-    QSqlQuery query;
-    query.exec(QString("delete from brewers where id = %1").arg(id));
 }
 
 QVariant DatabaseManager::insertBrewery(const QVariant& brewery_name,
@@ -370,9 +358,7 @@ QList<QObject*> DatabaseManager::brewery_beers(const QVariant& breweryid)
 {
     int brewery = breweryid.toInt();
 
-    // TODO: support cache?
-
-    // qDebug() << "DBM 376 Reading beers for breweryid" << brewer ;
+    qDebug() << "DBM 373 Reading beers for breweryid" << brewery ;
     QList<QObject*> rtn;
     QSqlQuery query(QString("select * from beers where breweryid = %1 ORDER BY abv ASC").arg(brewery));
     // QSqlQuery query(QString("select * from beers where breweryid = %1 ORDER BY beerName ASC"));
@@ -382,7 +368,7 @@ QList<QObject*> DatabaseManager::brewery_beers(const QVariant& breweryid)
         beer->m_beerName = query.value(1).toString();
         beer->m_abv = query.value(2).toString();
         beer->m_breweryid = query.value(3).toInt();
-        beer->m_drunk_y_n = query.value(4).toBool(); //Changed from Int to try and identify runtime error.
+        beer->m_drunk_y_n = query.value(4).toBool();
         beer->m_where_drunk = query.value(5).toString();
         beer->m_notes = query.value(6).toString();
 
@@ -403,12 +389,12 @@ int DatabaseManager::insertBeer(const QVariant& beerName,
     if (db.isOpen()) {
         QSqlQuery query;
         bool ret = query.prepare("INSERT INTO beers (beerName, abv, breweryid, drunk_y_n, where_drunk, notes) "
-                                 "VALUES (:beerName, :abv, :breweryid, :drunk_y_n, :where_drunk, :notes)");
+                                 "VALUES (:beerName, :abv, :breweryid, :drunk_y_n_text, :where_drunk, :notes)");
         if (ret) {
             query.bindValue(":beerName", beerName);
             query.bindValue(":abv", abv);
             query.bindValue(":breweryid", breweryid);
-            query.bindValue(":drunk_y_n", false);
+            query.bindValue(":drunk_y_n_text", drunk_y_n); // tried setting this to false
             query.bindValue(":where_drunk", where_drunk);
             query.bindValue(":notes", notes);
             query.exec();
@@ -426,7 +412,7 @@ void DatabaseManager::updateBeer(const int id,
                                  const QVariant& notes)
 {
     QSqlQuery query;
-    bool ret = query.prepare("UPDATE beers SET beerName = :beerName, abv = :abv, breweryid = :breweryid, drunk_y_n = :drunk_y_n, where_drunk = :where_drunk, notes = :notes where id = :id");
+    bool ret = query.prepare("UPDATE beers SET beerName = :beerName, abv = :abv, breweryid = :breweryid, drunk_y_n = :drunk_y_n_text, where_drunk = :where_drunk, notes = :notes where id = :id");
     if (ret) {
         query.bindValue(":beerName", beerName);
         query.bindValue(":abv", abv);
@@ -439,12 +425,6 @@ void DatabaseManager::updateBeer(const int id,
     }
 }
 
-void DatabaseManager::deleteBeer(const int id)
-{
-    QSqlQuery query;
-    query.exec(QString("delete from beers where id = %1").arg(id));
-}
-
 QObject* DatabaseManager::beer(const int id)
 {
     Beer* beer = new Beer(this);
@@ -453,7 +433,7 @@ QObject* DatabaseManager::beer(const int id)
         beer->m_id = query.value(0).toInt();
         beer->m_beerName = query.value(1).toString();
         beer->m_abv = query.value(2).toString();
-        beer->m_drunk_y_n = query.value(3).toInt(); // was Bool but changed to try and fix 'undefined' error
+        beer->m_drunk_y_n = query.value(3).toInt(); // was Bool
         beer->m_where_drunk = query.value(4).toString();
         beer->m_notes = query.value(5).toString();
     }
