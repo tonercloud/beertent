@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-X-Nemo-Application-Type=silica-qt5
-Exec=harbour-beerguide
-Icon=harbour-beerguide
-Name=Beerguide
-# translation example:
-# your app name in German locale (de)
-Name[de]=harbour-beerguide
